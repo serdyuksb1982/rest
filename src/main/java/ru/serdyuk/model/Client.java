@@ -11,6 +11,8 @@ import java.util.stream.Collectors;
 @Setter
 @ToString
 @Component
+@AllArgsConstructor
+@NoArgsConstructor
 public class Client {
 
     private Long id;
