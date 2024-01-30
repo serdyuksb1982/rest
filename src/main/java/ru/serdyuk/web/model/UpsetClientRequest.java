@@ -2,11 +2,9 @@ package ru.serdyuk.web.model;
 
 import lombok.*;
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 public class UpsetClientRequest {
 
     private String name;
