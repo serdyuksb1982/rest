@@ -154,6 +154,7 @@ public class ClientControllerTest extends AbstractTestController {
 
     @Test
     public void whenCreateClientWithEmptyName_thenReturnError() throws Exception {
+
         var response = mockMvc.perform(post("/api/v1/client")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(new UpsetClientRequest())))
@@ -161,6 +162,11 @@ public class ClientControllerTest extends AbstractTestController {
                 .andReturn()
                 .getResponse();
         response.setCharacterEncoding("UTF-8");
+
+        String actualResponse = response.getContentAsString();
+        String expectedResponse = StringTestUtils.readStringFromResource("response/empty_client_name_response.json");
+
+        JsonAssert.assertJsonEquals(actualResponse, expectedResponse);
     }
 
 }
