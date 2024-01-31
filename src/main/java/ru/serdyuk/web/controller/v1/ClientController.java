@@ -1,9 +1,10 @@
-package ru.serdyuk.controller;
+package ru.serdyuk.web.controller.v1;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.serdyuk.exception.EntityNotFoundException;
 import ru.serdyuk.mapper.v1.ClientMapper;
 import ru.serdyuk.model.Client;
 import ru.serdyuk.service.ClientService;
@@ -52,5 +53,10 @@ public class ClientController {
         clientService.deleteById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
+
+    /*@ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<Void> notFoundHandler(EntityNotFoundException exception) {
+        return ResponseEntity.notFound().build();
+    }*/
 
 }

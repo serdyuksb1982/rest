@@ -1,4 +1,4 @@
-package ru.serdyuk.controller;
+package ru.serdyuk.web.controller.v1;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

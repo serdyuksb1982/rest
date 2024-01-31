@@ -3,7 +3,7 @@ package ru.serdyuk.exception;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(HttpStatus.FOUND)
+//@ResponseStatus(HttpStatus.FOUND)
 public class EntityNotFoundException extends RuntimeException {
     public EntityNotFoundException(String message) {
         super(message);
