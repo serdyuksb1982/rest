@@ -1,6 +1,10 @@
 spring:
   main:
     allow-circular-references: true
+    allow-bean-definition-overriding: true
 app:
-  check-client-api-header: true
+  check-client-api-header: false
   client-api-key: 12345
+swagger:
+  dev-url: http://localhost:8081
+  prod-url: http://localhost:8082

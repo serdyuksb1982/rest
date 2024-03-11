@@ -21,11 +21,11 @@ import java.util.concurrent.atomic.AtomicLong;
 @Repository
 public class InMemoryOrderRepository implements OrderRepository {
 
-    private ClientRepository clientRepository;
+    private ClientRepository inMemoryClientRepository;
 
     @Autowired
     public void setClientRepository(ClientRepository clientRepository) {
-        this.clientRepository = clientRepository;
+        this.inMemoryClientRepository = clientRepository;
     }
 
     private final Map<Long, Order> repository = new ConcurrentHashMap<>();
@@ -47,7 +47,7 @@ public class InMemoryOrderRepository implements OrderRepository {
     public Order save(Order order) {
         Long orderId = currentId.incrementAndGet();
         Long clientId = order.getClient().getId();
-        Client client = clientRepository.findById(clientId)
+        Client client = inMemoryClientRepository.findById(clientId)
                 .orElseThrow(() -> new EntityNotFoundException("User not "));
         order.setClient(client);
         order.setId(clientId);
@@ -56,7 +56,7 @@ public class InMemoryOrderRepository implements OrderRepository {
         order.setUpdateAt(now);
         repository.put(orderId, order);
         client.addOrder(order);
-        clientRepository.update(client);
+        inMemoryClientRepository.update(client);
         return order;
     }
 
@@ -66,7 +66,7 @@ public class InMemoryOrderRepository implements OrderRepository {
         Instant now = Instant.now();
         Order currentOrder = repository.get(orderId);
         if (currentOrder == null) {
-            throw new EntityNotFoundException(MessageFormat.format("Order from ID {} not found", orderId));
+            throw new EntityNotFoundException(MessageFormat.format("Order from ID {0} not found", orderId));
         }
         BeanUtils.copyNotNullProperties(order, orderId);
         currentOrder.setUpdateAt(now);

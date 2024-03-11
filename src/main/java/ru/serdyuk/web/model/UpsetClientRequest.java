@@ -10,8 +10,8 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 public class UpsetClientRequest {
 
-    @NotBlank(message = "Имя клиента должно быть заполнено!")
-    @Size(min = 3, max = 30, message = "Имя клиента не может быть меньше {min} и больше {max}!")
+    @NotBlank(message = "The client's name must be filled!")
+    @Size(min = 3, max = 30, message = "The client's name cannot be less than {min} and more {max}!")
     private String name;
 
 }

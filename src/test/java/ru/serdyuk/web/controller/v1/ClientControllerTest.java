@@ -39,7 +39,7 @@ public class ClientControllerTest extends AbstractTestController {
 
     @Test
     public void whenFindAll_thenReturnAllClients() throws Exception{
-        //создание тестовых данных
+        // When
         List<Client> clients = new ArrayList<>();
         clients.add(createClient(1L, null));
         Order order = createOrder(1L, 100L, null);
@@ -49,7 +49,7 @@ public class ClientControllerTest extends AbstractTestController {
         clientResponses.add(createClientResponse(1L, null));
         OrderResponse orderResponse = createOrderResponse(1L, 100L);
         clientResponses.add(createClientResponse(2L, orderResponse));
-        //вызов контоллера
+        // Then
         ClientListResponse clientListResponse = new ClientListResponse(clientResponses );
         Mockito.when(clientService.findAll()).thenReturn(clients);
         Mockito.when(clientMapper.clientListToClientResponse(clients)).thenReturn(clientListResponse);
@@ -58,7 +58,7 @@ public class ClientControllerTest extends AbstractTestController {
                 .getResponse()
                 .getContentAsString();
         String expectedResponse = StringTestUtils.readStringFromResource("/response/find_al_client_responce.json");
-        //выполнение проверок
+        // Return
         Mockito.verify(clientService, Mockito.times(1) ).findAll();
         Mockito.verify(clientMapper, Mockito.times(1)).clientListToClientResponse(clients);
         JsonAssert.assertJsonEquals(expectedResponse, actualResponse);
@@ -145,7 +145,7 @@ public class ClientControllerTest extends AbstractTestController {
 
     @Test
     public void whenFindByIdNotExistedClient_thenReturnError() throws Exception {
-        Mockito.when(clientService.findById(50L)).thenThrow(new EntityNotFoundException("Клиент с ID 50 не найден!"));
+        Mockito.when(clientService.findById(50L)).thenThrow(new EntityNotFoundException("Client ID 50 not found!"));
         var response = mockMvc.perform(get("/api/v1/client/50"))
                 .andExpect(status().isNotFound())
                 .andReturn()

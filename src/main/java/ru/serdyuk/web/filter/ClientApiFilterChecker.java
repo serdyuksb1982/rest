@@ -16,7 +16,6 @@ import java.io.IOException;
 @ConditionalOnExpression("'${app.check-client-api-header}'.equals('true')")
 public class ClientApiFilterChecker extends OncePerRequestFilter {
 
-    //Имя проверяемого в интерсепторе заголовка запроса
     private static final String HTTP_CLIENT_HEADER = "X-Client-Api-Key";
 
     @Value("${app.client-api-key}")

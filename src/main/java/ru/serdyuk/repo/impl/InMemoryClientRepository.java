@@ -1,6 +1,5 @@
 package ru.serdyuk.repo.impl;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ru.serdyuk.exception.EntityNotFoundException;
@@ -22,7 +21,7 @@ import java.util.stream.Collectors;
 @Repository
 public class InMemoryClientRepository implements ClientRepository {
 
-    private  OrderRepository orderRepository;
+    private  OrderRepository inMemoryOrderRepository;
 
     private final Map<Long, Client> repository = new ConcurrentHashMap<>();
 
@@ -51,7 +50,7 @@ public class InMemoryClientRepository implements ClientRepository {
         Long clientID = client.getId();
         Client currentClient = repository.get(clientID);
         if (currentClient == null) {
-            throw new EntityNotFoundException(MessageFormat.format("Client with Id {id} not found.", clientID));
+            throw new EntityNotFoundException(MessageFormat.format("Client with Id {0} not found.", clientID));
         }
         BeanUtils.copyNotNullProperties(client, currentClient);
         currentClient.setId(clientID);
@@ -64,14 +63,14 @@ public class InMemoryClientRepository implements ClientRepository {
     public void deleteById(Long id) {
         Client client = repository.get(id);
         if (client == null) {
-            throw new EntityNotFoundException(MessageFormat.format("Client with Id {id} not found.", id));
+            throw new EntityNotFoundException(MessageFormat.format("Client with Id {0} not found.", id));
         }
-        orderRepository.deleteByIdIn(client.getOrders().stream().map(Order::getId).collect(Collectors.toList()));
+        inMemoryOrderRepository.deleteByIdIn(client.getOrders().stream().map(Order::getId).collect(Collectors.toList()));
         repository.remove(id);
     }
 
     @Autowired
     public void setOrderRepository(OrderRepository orderRepository) {
-        this.orderRepository = orderRepository;
+        this.inMemoryOrderRepository = orderRepository;
     }
 }
