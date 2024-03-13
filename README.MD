@@ -9,6 +9,7 @@
 * Основные сущности: Client, Order;
 * Методы контоллеров согласно CRUD;
 * Добавлены Interseptors;
+* 
 
 ## OpenApi Swagger 2
 
