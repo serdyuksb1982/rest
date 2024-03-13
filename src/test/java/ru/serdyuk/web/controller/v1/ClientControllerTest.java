@@ -1,6 +1,5 @@
 package ru.serdyuk.web.controller.v1;
 
-/*
 import net.bytebuddy.utility.RandomString;
 import net.javacrumbs.jsonunit.JsonAssert;
 import org.junit.jupiter.api.Test;
@@ -16,7 +15,6 @@ import ru.serdyuk.exception.EntityNotFoundException;
 import ru.serdyuk.mapper.v1.ClientMapper;
 import ru.serdyuk.model.Client;
 import ru.serdyuk.model.Order;
-import ru.serdyuk.service.ClientService;
 import ru.serdyuk.service.impl.ClientServiceImpl;
 import ru.serdyuk.web.model.ClientListResponse;
 import ru.serdyuk.web.model.ClientResponse;
@@ -200,4 +198,3 @@ public class ClientControllerTest extends AbstractTestController {
     }
 
 }
-*/
