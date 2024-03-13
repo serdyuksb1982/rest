@@ -14,30 +14,30 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ClientServiceImpl implements ClientService {
 
-    private final ClientRepository clientRepository;
+    private final ClientRepository inMemoryClientRepository;
 
     @Override
     public List<Client> findAll() {
-        return clientRepository.findAll();
+        return inMemoryClientRepository.findAll();
     }
 
     @Override
     public Client findById(Long id) {
-        return clientRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(MessageFormat.format("Client from ID {0} not found", id)));
+        return inMemoryClientRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(MessageFormat.format("Client from ID {0} not found", id)));
     }
 
     @Override
     public Client save(Client client) {
-        return clientRepository.save(client);
+        return inMemoryClientRepository.save(client);
     }
 
     @Override
     public Client update(Client client) {
-        return clientRepository.update(client);
+        return inMemoryClientRepository.update(client);
     }
 
     @Override
     public void deleteById(Long id) {
-        clientRepository.deleteById(id);
+        inMemoryClientRepository.deleteById(id);
     }
 }

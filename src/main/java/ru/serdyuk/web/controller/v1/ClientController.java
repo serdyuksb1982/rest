@@ -26,7 +26,7 @@ import javax.validation.Valid;
 @Tag(name = "Client V1", description = "Client API: version V1")
 public class ClientController {
 
-    public final ClientService clientService;
+    public final ClientService clientServiceImpl;
 
     public final ClientMapper clientMapper;
 
@@ -38,7 +38,7 @@ public class ClientController {
     @GetMapping
     public ResponseEntity<ClientListResponse> findAll() {
         return ResponseEntity.ok(
-                clientMapper.clientListToClientResponse(clientService.findAll())
+                clientMapper.clientListToClientResponse(clientServiceImpl.findAll())
         );
     }
 
@@ -60,26 +60,26 @@ public class ClientController {
     @GetMapping("/{id}")
     public ResponseEntity<ClientResponse> findById(@PathVariable Long id) {
         return ResponseEntity.ok(
-                clientMapper.clientToResponse(clientService.findById(id))
+                clientMapper.clientToResponse(clientServiceImpl.findById(id))
         );
     }
 
     @PostMapping
     public ResponseEntity<ClientResponse> create(@RequestBody @Valid UpsetClientRequest request) {
-        Client newClient = clientService.save(clientMapper.requestToClient(request));
+        Client newClient = clientServiceImpl.save(clientMapper.requestToClient(request));
         return ResponseEntity.status(HttpStatus.CREATED).body(clientMapper.clientToResponse(newClient));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<ClientResponse> update(@PathVariable("id") Long clientId,
                                                  @RequestBody UpsetClientRequest request) {
-        Client updateClient = clientService.update(clientMapper.requestToClient(clientId, request));
+        Client updateClient = clientServiceImpl.update(clientMapper.requestToClient(clientId, request));
         return ResponseEntity.ok(clientMapper.clientToResponse(updateClient));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        clientService.deleteById(id);
+        clientServiceImpl.deleteById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
