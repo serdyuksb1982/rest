@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 @Setter
 @ToString
 @AllArgsConstructor
+//@Builder
 @Entity(name = "clients")
 public class Client {
     public Client() {
@@ -22,6 +23,7 @@ public class Client {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "client_name")
     private String name;
 
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
@@ -29,7 +31,9 @@ public class Client {
     private List<Order> orders = new ArrayList<>();
 
     public void addOrder(Order order) {
-        orders.add(order);
+        if (orders == null) {
+            orders = new ArrayList<>();
+        } else orders.add(order);
     }
 
     public void removeOrder(Long orderId) {
@@ -38,19 +42,10 @@ public class Client {
         ).collect(Collectors.toList());
     }
 
-    @Override
-    public final boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null) return false;
-        Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass() : o.getClass();
-        Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
-        if (thisEffectiveClass != oEffectiveClass) return false;
-        Client client = (Client) o;
-        return getId() != null && Objects.equals(getId(), client.getId());
-    }
-
-    @Override
-    public final int hashCode() {
-        return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
+    public List<Order> getOrders() {
+        if (orders == null) {
+            orders = new ArrayList<>();
+        }
+        return orders;
     }
 }

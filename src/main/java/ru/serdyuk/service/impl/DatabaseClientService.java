@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import ru.serdyuk.exception.EntityNotFoundException;
 import ru.serdyuk.model.Client;
 import ru.serdyuk.repo.ClientRepository;
+import ru.serdyuk.repo.DatabaseClientRepository;
 import ru.serdyuk.service.ClientService;
 import ru.serdyuk.utils.BeanUtils;
 
@@ -15,7 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DatabaseClientService implements ClientService {
 
-    private final ClientRepository databaseClientRepository;
+    private final DatabaseClientRepository databaseClientRepository;
 
     @Override
     public List<Client> findAll() {
