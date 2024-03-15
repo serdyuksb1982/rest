@@ -5,8 +5,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.serdyuk.mapper.v2.OrderMapperV2;
-import ru.serdyuk.model.Order;
-import ru.serdyuk.service.OrderService;
+import ru.serdyuk.model.Orders;
+import ru.serdyuk.service.OrderServiceDb;
 import ru.serdyuk.web.model.OrderListResponse;
 import ru.serdyuk.web.model.OrderResponse;
 import ru.serdyuk.web.model.UpsetOrderRequest;
@@ -18,7 +18,7 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 public class OrderControllerV2 {
 
-    private final OrderService databaseOrderService;
+    private final OrderServiceDb databaseOrderService;
 
     private final OrderMapperV2 orderMapper;
 
@@ -38,15 +38,15 @@ public class OrderControllerV2 {
 
     @PostMapping
     public ResponseEntity<OrderResponse> create(@RequestBody @Valid UpsetOrderRequest request) {
-        Order newOrder = databaseOrderService.save(orderMapper.requestToOrder(request));
+        Orders newOrders = databaseOrderService.save(orderMapper.requestToOrder(request));
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(orderMapper.orderToResponse(newOrder));
+                .body(orderMapper.orderToResponse(newOrders));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<OrderResponse> update(@PathVariable("id") Long orderId, @RequestBody @Valid UpsetOrderRequest request) {
-        Order updateOrder = databaseOrderService.update(orderMapper.requestToOrder(orderId, request));
-        return ResponseEntity.ok(orderMapper.orderToResponse(updateOrder));
+        Orders updateOrders = databaseOrderService.update(orderMapper.requestToOrder(orderId, request));
+        return ResponseEntity.ok(orderMapper.orderToResponse(updateOrders));
     }
 
     @DeleteMapping("/{id}")

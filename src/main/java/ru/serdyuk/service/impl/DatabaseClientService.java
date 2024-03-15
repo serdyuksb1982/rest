@@ -3,10 +3,9 @@ package ru.serdyuk.service.impl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.serdyuk.exception.EntityNotFoundException;
-import ru.serdyuk.model.Client;
-import ru.serdyuk.repo.ClientRepository;
+import ru.serdyuk.model.Clients;
 import ru.serdyuk.repo.DatabaseClientRepository;
-import ru.serdyuk.service.ClientService;
+import ru.serdyuk.service.ClientServiceDb;
 import ru.serdyuk.utils.BeanUtils;
 
 import java.text.MessageFormat;
@@ -14,17 +13,17 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class DatabaseClientService implements ClientService {
+public class DatabaseClientService implements ClientServiceDb {
 
     private final DatabaseClientRepository databaseClientRepository;
 
     @Override
-    public List<Client> findAll() {
+    public List<Clients> findAll() {
         return databaseClientRepository.findAll();
     }
 
     @Override
-    public Client findById(Long id) {
+    public Clients findById(Long id) {
         return databaseClientRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(
                         MessageFormat.format(
@@ -34,15 +33,15 @@ public class DatabaseClientService implements ClientService {
     }
 
     @Override
-    public Client save(Client client) {
-        return databaseClientRepository.save(client);
+    public Clients save(Clients clients) {
+        return databaseClientRepository.save(clients);
     }
 
     @Override
-    public Client update(Client client) {
-        Client currentClient = findById(client.getId());
-        BeanUtils.copyNotNullProperties(client, currentClient);
-        return databaseClientRepository.save(client);
+    public Clients update(Clients clients) {
+        Clients currentClients = findById(clients.getId());
+        BeanUtils.copyNotNullProperties(clients, currentClients);
+        return databaseClientRepository.save(clients);
     }
 
     @Override

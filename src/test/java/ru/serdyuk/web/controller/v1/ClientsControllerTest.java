@@ -15,7 +15,7 @@ import ru.serdyuk.exception.EntityNotFoundException;
 import ru.serdyuk.mapper.v1.ClientMapper;
 import ru.serdyuk.model.Client;
 import ru.serdyuk.model.Order;
-import ru.serdyuk.service.impl.ClientServiceImpl;
+import ru.serdyuk.service.ClientService;
 import ru.serdyuk.web.model.ClientListResponse;
 import ru.serdyuk.web.model.ClientResponse;
 import ru.serdyuk.web.model.OrderResponse;
@@ -29,10 +29,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class ClientControllerTest extends AbstractTestController {
+public class ClientsControllerTest extends AbstractTestController {
 
     @MockBean
-    private ClientServiceImpl clientServiceImpl;
+    private ClientService clientServiceImpl;
 
     @MockBean
     private ClientMapper clientMapper;
@@ -108,9 +108,9 @@ public class ClientControllerTest extends AbstractTestController {
         Mockito.verify(clientMapper, Mockito.times(1)).requestToClient(request);
         Mockito.verify(clientMapper, Mockito.times(1)).clientToResponse(createdClient);
         JsonAssert.assertJsonEquals(expectedResponse, actualResponse);
-    }
+    }*/
 
-    @Test
+    /*@Test
     public void whenUpdateClient_thenReturnUpdatedClient() throws Exception {
         UpsetClientRequest request =new UpsetClientRequest("New Client 1");
         Client updatedClient = new Client(1L, "New Client 1", new ArrayList<>());

@@ -22,9 +22,9 @@ public interface OrderService {
     void deleteByIdIn(List<Long> ids);
 
     default void checkForUpdate(Long orderId) {
-        Order currentOrder = findById(orderId);
+        Order currentOrderDb = findById(orderId);
         Instant now = Instant.now();
-        Duration duration = Duration.between(currentOrder.getUpdateAt(), now);
+        Duration duration = Duration.between(currentOrderDb.getUpdateAt(), now);
         if (duration.getSeconds() > 5) {
             throw new UpdateStateException("Невозможно обновить заказ.");
         }

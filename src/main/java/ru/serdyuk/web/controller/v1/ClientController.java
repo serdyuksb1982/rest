@@ -66,15 +66,15 @@ public class ClientController {
 
     @PostMapping
     public ResponseEntity<ClientResponse> create(@RequestBody @Valid UpsetClientRequest request) {
-        Client newClient = clientServiceImpl.save(clientMapper.requestToClient(request));
-        return ResponseEntity.status(HttpStatus.CREATED).body(clientMapper.clientToResponse(newClient));
+        Client newClientDb = clientServiceImpl.save(clientMapper.requestToClient(request));
+        return ResponseEntity.status(HttpStatus.CREATED).body(clientMapper.clientToResponse(newClientDb));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<ClientResponse> update(@PathVariable("id") Long clientId,
                                                  @RequestBody UpsetClientRequest request) {
-        Client updateClient = clientServiceImpl.update(clientMapper.requestToClient(clientId, request));
-        return ResponseEntity.ok(clientMapper.clientToResponse(updateClient));
+        Client updateClientDb = clientServiceImpl.update(clientMapper.requestToClient(clientId, request));
+        return ResponseEntity.ok(clientMapper.clientToResponse(updateClientDb));
     }
 
     @DeleteMapping("/{id}")

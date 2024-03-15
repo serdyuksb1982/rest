@@ -37,16 +37,16 @@ public class OrderController {
 
     @PostMapping
     public ResponseEntity<OrderResponse> create(@RequestBody UpsetOrderRequest request) {
-        Order newOrder = orderServiceImpl.save(orderMapper.requestToOrder(request));
-        return ResponseEntity.status(HttpStatus.CREATED).body(orderMapper.orderToResponse(newOrder));
+        Order newOrderDb = orderServiceImpl.save(orderMapper.requestToOrder(request));
+        return ResponseEntity.status(HttpStatus.CREATED).body(orderMapper.orderToResponse(newOrderDb));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<OrderResponse> update(@PathVariable("id") Long orderId,
                                                 @RequestBody UpsetOrderRequest request) {
-        Order updateOrder = orderServiceImpl.update(orderMapper.requestToOrder(orderId, request));
+        Order updateOrderDb = orderServiceImpl.update(orderMapper.requestToOrder(orderId, request));
         return ResponseEntity.ok(
-                orderMapper.orderToResponse(updateOrder)
+                orderMapper.orderToResponse(updateOrderDb)
         );
     }
 

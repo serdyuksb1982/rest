@@ -1,7 +1,6 @@
 package ru.serdyuk.web.model;
 
 import lombok.*;
-import ru.serdyuk.model.Client;
 
 import java.math.BigDecimal;
 

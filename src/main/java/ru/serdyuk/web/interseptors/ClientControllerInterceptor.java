@@ -11,7 +11,7 @@ public class ClientControllerInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        log.info("ClientControllerInterceptor -> подготовка запроса к отправке в ClientController.");
+        log.info("ClientControllerInterceptor.preHandle -> preparing to request to be send to ClientController.");
         return HandlerInterceptor.super.preHandle(request, response, handler);
     }
 }

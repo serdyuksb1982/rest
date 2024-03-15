@@ -1,6 +1,9 @@
 app:
   check-client-api-header: false
 spring:
+  jpa:
+    hibernate:
+      ddl-auto: none
   main:
     allow-circular-references: true
     allow-bean-definition-overriding: true

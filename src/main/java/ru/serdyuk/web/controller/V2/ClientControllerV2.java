@@ -5,8 +5,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.serdyuk.mapper.v2.ClientMapperV2;
-import ru.serdyuk.model.Client;
-import ru.serdyuk.service.ClientService;
+import ru.serdyuk.model.Clients;
+import ru.serdyuk.service.ClientServiceDb;
 import ru.serdyuk.web.model.ClientListResponse;
 import ru.serdyuk.web.model.ClientResponse;
 import ru.serdyuk.web.model.UpsetClientRequest;
@@ -19,7 +19,7 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 public class ClientControllerV2 {
 
-    private final ClientService databaseClientService;
+    private final ClientServiceDb databaseClientService;
 
     private final ClientMapperV2 clientMapper;
 
@@ -41,15 +41,15 @@ public class ClientControllerV2 {
 
     @PostMapping
     public ResponseEntity<ClientResponse> create(@RequestBody @Valid UpsetClientRequest request) {
-        Client newClient = databaseClientService.save(clientMapper.requestToClient(request));
+        Clients newClients = databaseClientService.save(clientMapper.requestToClient(request));
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(clientMapper.clientToResponse(newClient));
+                .body(clientMapper.clientToResponse(newClients));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<ClientResponse> update(@PathVariable("id") Long id, @RequestBody @Valid UpsetClientRequest request) {
-        Client updateClient = databaseClientService.update(clientMapper.requestToClient(id, request));
-        return ResponseEntity.ok(clientMapper.clientToResponse(updateClient));
+        Clients updateClients = databaseClientService.update(clientMapper.requestToClient(id, request));
+        return ResponseEntity.ok(clientMapper.clientToResponse(updateClients));
     }
 
     @DeleteMapping("/{id}")
