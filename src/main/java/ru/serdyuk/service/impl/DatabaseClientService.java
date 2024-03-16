@@ -2,9 +2,12 @@ package ru.serdyuk.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.serdyuk.exception.EntityNotFoundException;
 import ru.serdyuk.model.Clients;
+import ru.serdyuk.model.Orders;
 import ru.serdyuk.repo.DatabaseClientRepository;
+import ru.serdyuk.repo.DatabaseOrderRepository;
 import ru.serdyuk.service.ClientServiceDb;
 import ru.serdyuk.utils.BeanUtils;
 
@@ -16,6 +19,8 @@ import java.util.List;
 public class DatabaseClientService implements ClientServiceDb {
 
     private final DatabaseClientRepository databaseClientRepository;
+
+    private final DatabaseOrderRepository databaseOrderRepository;
 
     @Override
     public List<Clients> findAll() {
@@ -47,5 +52,18 @@ public class DatabaseClientService implements ClientServiceDb {
     @Override
     public void deleteById(Long id) {
         databaseClientRepository.deleteById(id);
+    }
+
+    @Override
+    @Transactional
+    public Clients saveWithOrders(Clients client, List<Orders> orders) {
+        Clients saveClient = databaseClientRepository.save(client);
+
+        for (Orders order : orders) {
+            order.setClients(saveClient);
+            var saveOrder = databaseOrderRepository.save(order);
+            saveClient.addOrder(saveOrder);
+        }
+        return saveClient;
     }
 }

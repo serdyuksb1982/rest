@@ -6,9 +6,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.serdyuk.mapper.v2.ClientMapperV2;
 import ru.serdyuk.model.Clients;
+import ru.serdyuk.model.Orders;
 import ru.serdyuk.service.ClientServiceDb;
 import ru.serdyuk.web.model.*;
 
+import java.util.List;
 
 
 @RestController
@@ -53,6 +55,19 @@ public class ClientControllerV2 {
     public ResponseEntity<Void> delete(@PathVariable("id") Long clientId) {
         databaseClientService.deleteById(clientId);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/save-with-orders")
+    public ResponseEntity<ClientResponse> createWithOrders(@RequestBody CreateClientWithOrderRequest request) {
+        Clients client = Clients.builder().name(request.getName()).build();
+        List<Orders> orders = request.getOrders().stream()
+                .map(orderRequest -> Orders.builder()
+                        .product(orderRequest.getProduct())
+                        .cost(orderRequest.getCost())
+                        .build()).toList();
+        return ResponseEntity.status(HttpStatus.CREATED).body(
+                clientMapper.clientToResponse(databaseClientService.saveWithOrders(client, orders))
+        );
     }
 
 }

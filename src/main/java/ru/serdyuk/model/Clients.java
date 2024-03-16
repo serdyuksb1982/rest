@@ -28,5 +28,9 @@ public class Clients {
     @Builder.Default
     private List<Orders> orders = new ArrayList<>();
 
-
+    public void addOrder(Orders order) {
+        if (orders == null) {
+            orders = new ArrayList<>();
+        } else orders.add(order);
+    }
 }
