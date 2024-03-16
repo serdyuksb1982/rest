@@ -18,7 +18,6 @@ import ru.serdyuk.web.model.ClientResponse;
 import ru.serdyuk.web.model.ErrorResponse;
 import ru.serdyuk.web.model.UpsetClientRequest;
 
-import javax.validation.Valid;
 
 @RestController
 @RequestMapping("api/v1/client")
@@ -65,7 +64,7 @@ public class ClientController {
     }
 
     @PostMapping
-    public ResponseEntity<ClientResponse> create(@RequestBody @Valid UpsetClientRequest request) {
+    public ResponseEntity<ClientResponse> create(@RequestBody UpsetClientRequest request) {
         Client newClientDb = clientServiceImpl.save(clientMapper.requestToClient(request));
         return ResponseEntity.status(HttpStatus.CREATED).body(clientMapper.clientToResponse(newClientDb));
     }

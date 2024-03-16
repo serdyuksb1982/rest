@@ -9,7 +9,6 @@ import ru.serdyuk.model.Clients;
 import ru.serdyuk.service.ClientServiceDb;
 import ru.serdyuk.web.model.*;
 
-import javax.validation.Valid;
 
 
 @RestController
@@ -38,14 +37,14 @@ public class ClientControllerV2 {
     }
 
     @PostMapping
-    public ResponseEntity<ClientResponse> create(@RequestBody @Valid UpsetClientRequest request) {
+    public ResponseEntity<ClientResponse> create(@RequestBody UpsetClientRequest request) {
         Clients newClients = databaseClientService.save(clientMapper.requestToClient(request));
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(clientMapper.clientToResponse(newClients));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ClientResponse> update(@PathVariable("id") Long id, @RequestBody @Valid UpsetClientRequest request) {
+    public ResponseEntity<ClientResponse> update(@PathVariable("id") Long id, @RequestBody UpsetClientRequest request) {
         Clients updateClients = databaseClientService.update(clientMapper.requestToClient(id, request));
         return ResponseEntity.ok(clientMapper.clientToResponse(updateClients));
     }

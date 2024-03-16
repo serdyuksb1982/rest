@@ -1,9 +1,11 @@
 package ru.serdyuk.web.model;
 
+
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+
 
 @Getter@Setter@ToString
 @AllArgsConstructor

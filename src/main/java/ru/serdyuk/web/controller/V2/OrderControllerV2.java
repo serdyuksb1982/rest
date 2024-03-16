@@ -14,6 +14,7 @@ import ru.serdyuk.web.model.UpsetOrderRequest;
 
 import javax.validation.Valid;
 
+
 @RestController
 @RequestMapping("/api/v2/order")
 @RequiredArgsConstructor
@@ -24,7 +25,7 @@ public class OrderControllerV2 {
     private final OrderMapperV2 orderMapper;
 
     @GetMapping("/filter")
-    public ResponseEntity<OrderListResponse> filterBy(OrderFilter filter) {
+    public ResponseEntity<OrderListResponse> filterBy(@Valid OrderFilter filter) {
         return ResponseEntity.ok(
             orderMapper.orderListToOrderListResponse(databaseOrderService
                     .filterBy(filter))
