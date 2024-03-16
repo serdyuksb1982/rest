@@ -7,9 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.serdyuk.mapper.v2.ClientMapperV2;
 import ru.serdyuk.model.Clients;
 import ru.serdyuk.service.ClientServiceDb;
-import ru.serdyuk.web.model.ClientListResponse;
-import ru.serdyuk.web.model.ClientResponse;
-import ru.serdyuk.web.model.UpsetClientRequest;
+import ru.serdyuk.web.model.*;
 
 import javax.validation.Valid;
 

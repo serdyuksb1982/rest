@@ -1,14 +1,17 @@
 package ru.serdyuk.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import ru.serdyuk.exception.EntityNotFoundException;
 import ru.serdyuk.model.Clients;
 import ru.serdyuk.model.Orders;
 import ru.serdyuk.repo.DatabaseOrderRepository;
+import ru.serdyuk.repo.OrderSpecification;
 import ru.serdyuk.service.ClientServiceDb;
 import ru.serdyuk.service.OrderServiceDb;
 import ru.serdyuk.utils.BeanUtils;
+import ru.serdyuk.web.model.OrderFilter;
 
 import java.text.MessageFormat;
 import java.util.List;
@@ -20,6 +23,14 @@ public class DatabaseOrderService implements OrderServiceDb {
     private final DatabaseOrderRepository databaseOrderRepository;
 
     private final ClientServiceDb databaseClientService;
+
+    @Override
+    public List<Orders> filterBy(OrderFilter filter) {
+        return databaseOrderRepository.findAll(OrderSpecification.withFilter(filter),
+                PageRequest.of(
+                        filter.getPageNumber(), filter.getPageSize()
+                )).getContent();
+    }
 
     @Override
     public List<Orders> findAll() {

@@ -13,6 +13,7 @@ import java.time.Instant;
 @Setter
 @ToString
 @AllArgsConstructor
+@Builder
 @Entity(name = "orders")
 public class Orders {
 

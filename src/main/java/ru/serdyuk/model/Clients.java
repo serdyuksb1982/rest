@@ -6,6 +6,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Builder
 @Getter
 @Setter
 @ToString
@@ -19,17 +20,13 @@ public class Clients {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "client_name")
+
     private String name;
 
     @OneToMany(mappedBy = "clients", cascade = CascadeType.ALL)
     @ToString.Exclude
+    @Builder.Default
     private List<Orders> orders = new ArrayList<>();
 
-    public List<Orders> getOrders() {
-        if (orders == null) {
-            orders = new ArrayList<>();
-        }
-        return orders;
-    }
+
 }

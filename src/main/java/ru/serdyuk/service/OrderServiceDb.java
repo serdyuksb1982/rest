@@ -2,12 +2,16 @@ package ru.serdyuk.service;
 
 import ru.serdyuk.exception.UpdateStateException;
 import ru.serdyuk.model.Orders;
+import ru.serdyuk.web.model.OrderFilter;
 
 import java.time.Duration;
 import java.time.Instant;
 import java.util.List;
 
 public interface OrderServiceDb {
+
+    List<Orders> filterBy(OrderFilter filter);
+
     List<Orders> findAll();
 
     Orders findById(Long id);

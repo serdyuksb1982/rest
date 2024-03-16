@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.serdyuk.mapper.v2.OrderMapperV2;
 import ru.serdyuk.model.Orders;
 import ru.serdyuk.service.OrderServiceDb;
+import ru.serdyuk.web.model.OrderFilter;
 import ru.serdyuk.web.model.OrderListResponse;
 import ru.serdyuk.web.model.OrderResponse;
 import ru.serdyuk.web.model.UpsetOrderRequest;
@@ -21,6 +22,14 @@ public class OrderControllerV2 {
     private final OrderServiceDb databaseOrderService;
 
     private final OrderMapperV2 orderMapper;
+
+    @GetMapping("/filter")
+    public ResponseEntity<OrderListResponse> filterBy(OrderFilter filter) {
+        return ResponseEntity.ok(
+            orderMapper.orderListToOrderListResponse(databaseOrderService
+                    .filterBy(filter))
+        );
+    }
 
     @GetMapping
     public ResponseEntity<OrderListResponse> findAll() {
