@@ -1,7 +1,21 @@
 spring:
   main:
-    allow-circular-references: true
     allow-bean-definition-overriding: true
+  jpa:
+    show-sql: true
+    generate-ddl: true
+    hibernate:
+      ddl-auto: create
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    open-in-view: false
+  datasource:
+    url: jdbc:postgresql://localhost:5432/app_db
+    username: postgres
+    password: postgres
+server:
+  error:
+    include-message: always
+    include-binding-errors: always
 app:
   check-client-api-header: false
   client-api-key: 12345

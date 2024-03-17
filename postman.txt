@@ -1,0 +1,82 @@
+POST/http://localhost:8080/api/v2/client
+body:
+    {
+        "name": "lilva"
+    }
+response:
+    status: 201 Created
+    {
+        "id": 1,
+        "name": "lilva",
+        "orders": []
+    }
+---------------------------------------------
+POST/http://localhost:8080/api/v2/order
+body:
+    {
+        "product": "IPhone",
+        "cost": 100,
+        "clientId": 1
+    }
+response:
+    status: 201 Created
+    {
+        "id": 1,
+        "product": "IPhone",
+        "cost": 100
+    }
+----------------------------------------------
+GET/http://localhost:8080/api/v2/order/filter?productName=Book&pageSize=2&pageNumber=0
+- - - - - - - - - - - - - - - - - - - - - - - -
+    ...Page<Orders> findAllByProduct(String product, Pageable pageable);
+
+public class DatabaseOrderService {
+    @Override
+    public List<Orders> filterBy(OrderFilter filter) {
+        return orderRepository.findAllByProduct(filter.getProductName(),
+            PageRequest.of(
+                filter.getPageNumber(), filter.getPageSize()
+            )).getContent();
+    }
+}
+response:
+    status: 200 Ok
+    {
+        "orders": [
+            {
+                "id": 3,
+                "product": "Book",
+                "cost": 50.00
+            },
+            {
+                "id": 4,
+                "product": "Book",
+                "cost": 120.00
+            }
+        ]
+    }
+---------------------------------------------
+GET/http://localhost:8080/api/v2/order/filter?pageSize=10&pageNumber=0&minCost=100&maxCost=15000000&clientId=1
+response:
+    status: 200 Ok
+    {
+        {
+            "orders": [
+                {
+                    "id": 1,
+                    "product": "Car",
+                    "cost": 50000.00
+                },
+                {
+                    "id": 2,
+                    "product": "Car",
+                    "cost": 10000.00
+                },
+                {
+                    "id": 3,
+                    "product": "Book",
+                    "cost": 500.00
+                }
+            ]
+        }
+    }

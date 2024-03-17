@@ -17,42 +17,42 @@ import ru.serdyuk.web.model.UpsetOrderRequest;
 @RequiredArgsConstructor
 public class OrderController {
 
-    public final OrderService orderService;
+    public final OrderService orderServiceImpl;
 
     public final OrderMapper orderMapper;
 
     @GetMapping
     public ResponseEntity<OrderListResponse> findAll() {
         return ResponseEntity.ok(
-                orderMapper.orderListToOrderListResponse(orderService.findAll())
+                orderMapper.orderListToOrderListResponse(orderServiceImpl.findAll())
         );
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<OrderResponse> findById(@PathVariable Long id) {
         return ResponseEntity.ok(
-                orderMapper.orderToResponse(orderService.findById(id))
+                orderMapper.orderToResponse(orderServiceImpl.findById(id))
         );
     }
 
     @PostMapping
     public ResponseEntity<OrderResponse> create(@RequestBody UpsetOrderRequest request) {
-        Order newOrder = orderService.save(orderMapper.requestToOrder(request));
-        return ResponseEntity.status(HttpStatus.CREATED).body(orderMapper.orderToResponse(newOrder));
+        Order newOrderDb = orderServiceImpl.save(orderMapper.requestToOrder(request));
+        return ResponseEntity.status(HttpStatus.CREATED).body(orderMapper.orderToResponse(newOrderDb));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<OrderResponse> update(@PathVariable("id") Long orderId,
                                                 @RequestBody UpsetOrderRequest request) {
-        Order updateOrder = orderService.update(orderMapper.requestToOrder(orderId, request));
+        Order updateOrderDb = orderServiceImpl.update(orderMapper.requestToOrder(orderId, request));
         return ResponseEntity.ok(
-                orderMapper.orderToResponse(updateOrder)
+                orderMapper.orderToResponse(updateOrderDb)
         );
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        orderService.deleteById(id);
+        orderServiceImpl.deleteById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 

@@ -14,7 +14,8 @@ public class ApplicationWebConfiguration implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(loggingControllerInterceptor());
         registry.addInterceptor(clientControllerInterceptor())
-                .addPathPatterns("/api/v1/client/**");
+                .addPathPatterns("/api/v1/client/**")
+                .addPathPatterns("/api/v2/client/**");
     }
 
     @Bean

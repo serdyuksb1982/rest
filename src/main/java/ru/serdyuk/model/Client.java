@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -23,10 +22,12 @@ public class Client {
     private List<Order> orders = new ArrayList<>();
 
     public void addOrder(Order order) {
-        orders.add(order);
+        if (orders == null) {
+            orders = new ArrayList<>();
+        } else orders.add(order);
     }
 
-    public void removeOrder(Long orderId) {
+    /*public void removeOrder(Long orderId) {
         orders = orders.stream().filter(o -> !o.getId().equals(orderId)).collect(Collectors.toList());
-    }
+    }*/
 }

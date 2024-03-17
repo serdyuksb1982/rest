@@ -9,6 +9,8 @@
 * Основные сущности: Client, Order;
 * Методы контоллеров согласно CRUD;
 * Добавлены Interseptors;
+* Добавлена фильтрация Get-запросов к Orders;
+* Добавлена обработка Транзакций к методу создания Client с Orders одновременно. Свойство spring.jpa.open-in-view по умолчанию false, добавлен EntityGraph;
 
 ## OpenApi Swagger 2
 

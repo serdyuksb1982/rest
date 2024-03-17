@@ -1,17 +1,16 @@
 package ru.serdyuk.web.model;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 
-@Getter
-@Setter
+@Data@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
-public class UpsetOrderRequest {
-
-    private Long clientId;
+public class OrderRequest {
 
     private String product;
 

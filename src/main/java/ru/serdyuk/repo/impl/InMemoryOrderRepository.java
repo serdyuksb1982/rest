@@ -1,7 +1,7 @@
 package ru.serdyuk.repo.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 import ru.serdyuk.exception.EntityNotFoundException;
 import ru.serdyuk.model.Client;
 import ru.serdyuk.model.Order;
@@ -18,7 +18,7 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
-@Repository
+@Component
 public class InMemoryOrderRepository implements OrderRepository {
 
     private ClientRepository inMemoryClientRepository;
@@ -64,15 +64,15 @@ public class InMemoryOrderRepository implements OrderRepository {
     public Order update(Order order) {
         Long orderId = order.getId();
         Instant now = Instant.now();
-        Order currentOrder = repository.get(orderId);
-        if (currentOrder == null) {
+        Order currentOrderDb = repository.get(orderId);
+        if (currentOrderDb == null) {
             throw new EntityNotFoundException(MessageFormat.format("Order from ID {0} not found", orderId));
         }
         BeanUtils.copyNotNullProperties(order, orderId);
-        currentOrder.setUpdateAt(now);
-        currentOrder.setId(orderId);
-        repository.put(orderId, currentOrder);
-        return currentOrder;
+        currentOrderDb.setUpdateAt(now);
+        currentOrderDb.setId(orderId);
+        repository.put(orderId, currentOrderDb);
+        return currentOrderDb;
     }
 
     @Override

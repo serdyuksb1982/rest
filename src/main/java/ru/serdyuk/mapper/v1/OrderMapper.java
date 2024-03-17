@@ -15,14 +15,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OrderMapper {
 
-    private final ClientService clientService;
+    private final ClientService clientServiceImpl;
 
     public Order requestToOrder(UpsetOrderRequest request) {
         Order order = new Order();
 
         order.setCost(request.getCost());
         order.setProduct(request.getProduct());
-        order.setClient(clientService.findById(request.getClientId()));
+        order.setClient(clientServiceImpl.findById(request.getClientId()));
         return order;
     }
 
